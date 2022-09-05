@@ -1,0 +1,54 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">Create Task</div>
+                            <div class="col-auto">
+                                <a class="dropdown-item" href="{{ route('tasks.index') }}">Tasks</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('tasks.store') }}">
+                            @csrf
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" type="text" name="name" value="{{ old('name') }}"
+                                    required>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Create</button>
+                            <a href="{{ route('tasks.index') }}" class="btn btn-danger">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('[name="user_id"]').val({{ old('project') }});
+            $('[name="project_id"]').val({{ old('project') }});
+        });
+    </script>
+@endsection
